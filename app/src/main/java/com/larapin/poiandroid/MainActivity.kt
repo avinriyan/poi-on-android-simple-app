@@ -1,24 +1,18 @@
 package com.larapin.poiandroid
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Environment
-import android.widget.Button
-import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import org.apache.poi.xslf.usermodel.SlideLayout
 import org.apache.poi.xslf.usermodel.XMLSlideShow
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import org.apache.poi.xwpf.usermodel.XWPFDocument
-import org.jetbrains.anko.find
-import org.jetbrains.anko.toast
 import java.io.File
 import java.io.FileOutputStream
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var btnDocx: Button
-    private lateinit var btnXlsx: Button
-    private lateinit var btnPptx: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,22 +20,17 @@ class MainActivity : AppCompatActivity() {
         System.setProperty("org.apache.poi.javax.xml.stream.XMLInputFactory", "com.fasterxml.aalto.stax.InputFactoryImpl")
         System.setProperty("org.apache.poi.javax.xml.stream.XMLOutputFactory", "com.fasterxml.aalto.stax.OutputFactoryImpl")
         System.setProperty("org.apache.poi.javax.xml.stream.XMLEventFactory", "com.fasterxml.aalto.stax.EventFactoryImpl")
-        
-        val inputText = find(R.id.input_text) as EditText
-        btnDocx = find(R.id.btn_docx)
-        btnXlsx = find(R.id.btn_xlsx)
-        btnPptx = find(R.id.btn_pptx)
 
         val path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
 
-        btnDocx.setOnClickListener {
-            createDocx(path, inputText.text.toString().trim())
+        btn_docx.setOnClickListener {
+            createDocx(path, input_text.text.toString().trim())
         }
-        btnXlsx.setOnClickListener{
-            createXlsx(path, inputText.text.toString().trim())
+        btn_xlsx.setOnClickListener{
+            createXlsx(path, input_text.text.toString().trim())
         }
-        btnPptx.setOnClickListener{
-            createPptx(path, inputText.text.toString().trim())
+        btn_pptx.setOnClickListener{
+            createPptx(path, input_text.text.toString().trim())
         }
     }
 
@@ -57,7 +46,7 @@ class MainActivity : AppCompatActivity() {
 
             document.write(outputStream)
             outputStream.close()
-            toast("poi.docx was successfully created")
+            Toast.makeText(this, "poi.docx was successfully created", Toast.LENGTH_SHORT).show()
         }catch (e: Exception){
             e.printStackTrace()
         }
@@ -76,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 
             workbook.write(outputStream)
             outputStream.close()
-            toast("poi.xlsx was successfully created")
+            Toast.makeText(this, "poi.xlsx was successfully created", Toast.LENGTH_SHORT).show()
         }catch (e: Exception){
             e.printStackTrace()
         }
@@ -96,7 +85,7 @@ class MainActivity : AppCompatActivity() {
 
             slideShow.write(outputStream)
             outputStream.close()
-            toast("poi.pptx was successfully created")
+            Toast.makeText(this, "poi.pptx was successfully created", Toast.LENGTH_SHORT).show()
         }catch (e: Exception){
             e.printStackTrace()
         }
